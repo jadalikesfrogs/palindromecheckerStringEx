@@ -2,8 +2,12 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 
 using namespace std;
+
+//returns true if the current char should be skipped
+bool isSkipChar(char c);
 
 int main() {
 
@@ -18,11 +22,14 @@ int main() {
 
 	while ((i < j) && isPalindrome) {
 		
-		if (input[i] == ' ') { i++; }// checks for a space and if there is one it skips it.
+		if (isSkipChar(input[i])) { i++; }// checks for a space and if there is one it skips it.
 
-		else if (input[j] == ' ') { j--; }//checks for a space
+		else if (isSkipChar(input[j]) ){ j--; }//checks for a space
 
-		else { isPalindrome = (input[i++] == input[j--]); } // i and j will move towards the middle and check 2 chars
+		else { 
+			isPalindrome = (toupper(input[i++]) == toupper(input[j--])); // i and j will move towards the middle and check 2 chars
+		
+		} 
 		
 	}
 	
@@ -33,4 +40,11 @@ int main() {
 
 
 	return 0; 
+}
+
+bool isSkipChar(char c)
+{
+
+	return (ispunct(c) || isspace(c) || iscntrl(c));
+	
 }
